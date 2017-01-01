@@ -9,6 +9,7 @@ import java.net.Socket;
 
 import model.main_server.*;
 import model.messages.PullFileRequest;
+import model.messages.PushFileRequest;
 import model.messages.Request;
 import model.messages.Response;
 
@@ -91,14 +92,20 @@ public class DispatcherHost
         }
 
     }
-    public void serveRequest(Request request)
+    public Response serveRequest(Request request)
     {
         if(request!=null)
         {
             if(request instanceof PullFileRequest)
             {
-                
+
             }
+            if(request instanceof PushFileRequest)
+            {
+
+            }
+
         }
+        return null;
     }
 }
