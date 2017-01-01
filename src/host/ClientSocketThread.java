@@ -1,11 +1,11 @@
-package model.host;
+package host;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import model.main_server.DispatcherServer;
+import main_server.DispatcherServer;
 import model.messages.Request;
 import model.messages.Response;
 

@@ -1,4 +1,4 @@
-package model;
+package model.entities;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +25,7 @@ public class FileInstance
 
     @Override
     public String toString() {
-        return "FileInstance{" +
+        return "model.entities.FileInstance{" +
                 "name='" + name + '\'' +
                 ", md5='" + md5 + '\'' +
                 ", size=" + size +

@@ -2,7 +2,7 @@ package model.messages;
 
 import java.io.Serializable;
 
-import model.host.Host;
+import model.entities.Host;
 
 public class Request implements Serializable
 {

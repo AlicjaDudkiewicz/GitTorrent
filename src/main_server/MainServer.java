@@ -1,7 +1,7 @@
-package model.main_server;
+package main_server;
 
-import model.FileInstance;
-import model.host.Host;
+import model.entities.FileInstance;
+import model.entities.Host;
 
 import java.util.HashMap;
 

@@ -1,14 +1,13 @@
-package model.host;
-
-import model.FileInstance;
+package model.entities;
 
 import java.util.ArrayList;
+
 
 
 public class Host
 {
     private String name;
-    private ArrayList<FileInstance> filesList= new ArrayList<>();
+    private ArrayList<FileInstance> filesList = new ArrayList<>();
 
     public String getName()
     {

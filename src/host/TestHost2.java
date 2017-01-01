@@ -1,4 +1,4 @@
-package model.host;
+package host;
 
 import model.messages.FileListUploadRequest;
 import model.messages.Request;

@@ -1,13 +1,11 @@
-package model.host;
+package host;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import model.main_server.*;
 import model.messages.PullFileRequest;
 import model.messages.PushFileRequest;
 import model.messages.Request;
@@ -44,7 +42,7 @@ public class DispatcherHost
             {
                 System.out.println("I/O error: " + e);
             }
-            new model.main_server.ClientSocketThread(socket).start();
+            new main_server.ClientSocketThread(socket).start();
         }
     }
 

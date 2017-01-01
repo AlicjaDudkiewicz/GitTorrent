@@ -1,6 +1,6 @@
 package model.messages;
 
-import model.FileInstance;
+import model.entities.FileInstance;
 
 import java.util.ArrayList;
 

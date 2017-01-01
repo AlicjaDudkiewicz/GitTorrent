@@ -1,8 +1,7 @@
-package model;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
+
+import model.entities.FileInstance;
 
 /**
  * Created by Alicja on 2016-12-28.

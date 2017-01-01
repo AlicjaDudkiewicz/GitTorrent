@@ -1,4 +1,4 @@
-package model.main_server;
+package main_server;
 
 import model.messages.Request;
 import model.messages.Response;

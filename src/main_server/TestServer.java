@@ -1,4 +1,4 @@
-package model.main_server;
+package main_server;
 
 /**
  * Created by Alicja on 2016-12-30.
