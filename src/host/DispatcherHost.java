@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 import model.entities.FileInstance;
 import model.entities.Host;
 import model.messages.FilesListResponse;
@@ -19,9 +21,25 @@ import model.messages.Response;
 
 public class DispatcherHost
 {
-    private ServerSocket serverSocket;
-    private Socket       socketForClient;
-    private Socket       clientSocket;
+    private ServerSocket         serverSocket;
+    private Socket               socketForClient;
+    private Socket               clientSocket;
+    private MainWindowController controller;
+
+    public DispatcherHost()
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try
+        {
+            Pane p = fxmlLoader.load(getClass().getResource("mainWindow.fxml").openStream());
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        controller = fxmlLoader.getController();
+        controller.setDispatcher(this);
+    }
 
     public void activateServer(int port)
     {
@@ -95,15 +113,16 @@ public class DispatcherHost
         }
 
     }
+
     public Response serveRequest(Request request)
     {
-        if(request!=null)
+        if (request != null)
         {
-            if(request instanceof PullFileRequest)
+            if (request instanceof PullFileRequest)
             {
 
             }
-            if(request instanceof PushFileRequest)
+            if (request instanceof PushFileRequest)
             {
 
             }
@@ -111,20 +130,21 @@ public class DispatcherHost
         }
         return null;
     }
+
     public void serveResponse(Response response)
     {
-    	MainWindowController controller=null;
-    	if(response instanceof FilesListResponse)
-    	{
-    	 ArrayList<FileInstance> filesList=((FilesListResponse) response).getFilesList();
-    	 controller.refreshFilesList(filesList);
-    	}
-    	if(response instanceof HostListResponse)
-    	{
-    		ArrayList<Host> hostList= ((HostListResponse)response).getHostList();
-    		controller.setHostList();
-    	}
-    	
-    	
+        MainWindowController controller = null;
+        if (response instanceof FilesListResponse)
+        {
+            ArrayList<FileInstance> filesList = ((FilesListResponse) response).getFilesList();
+            controller.refreshFilesList(filesList);
+        }
+        if (response instanceof HostListResponse)
+        {
+            ArrayList<Host> hostList = ((HostListResponse) response).getHostList();
+            controller.setHostList();
+        }
+
+
     }
 }
