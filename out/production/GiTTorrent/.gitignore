@@ -1,5 +1,6 @@
-/FilesListUploader.class
-/Main.class
-/host/
 /main_server/
 /model/
+/sockets/
+/messages/
+/controllers/
+/RequestController/
