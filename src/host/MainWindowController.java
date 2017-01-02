@@ -2,6 +2,7 @@ package host;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -70,6 +71,11 @@ public class MainWindowController
     {
 
     }
+    
+    void refreshFilesList(ArrayList<FileInstance> fileList)
+    {
+    	
+    }
 
     @FXML
     void initialize()
@@ -83,5 +89,16 @@ public class MainWindowController
         filesizeColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSize() + ""));
 
         fileTable.getItems().add(new FileInstance(new File("C:\\x.txt")));
+    }
+
+	public void getHostList(ArrayList<Host> hostList2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+    public void setHostList()
+    {
+        // TODO Auto-generated method stub
+        
     }
 }

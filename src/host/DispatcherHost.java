@@ -5,7 +5,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
+import model.entities.FileInstance;
+import model.entities.Host;
+import model.messages.FilesListResponse;
+import model.messages.HostListResponse;
 import model.messages.PullFileRequest;
 import model.messages.PushFileRequest;
 import model.messages.Request;
@@ -105,5 +110,21 @@ public class DispatcherHost
 
         }
         return null;
+    }
+    public void serveResponse(Response response)
+    {
+    	MainWindowController controller=null;
+    	if(response instanceof FilesListResponse)
+    	{
+    	 ArrayList<FileInstance> filesList=((FilesListResponse) response).getFilesList();
+    	 controller.refreshFilesList(filesList);
+    	}
+    	if(response instanceof HostListResponse)
+    	{
+    		ArrayList<Host> hostList= ((HostListResponse)response).getHostList();
+    		controller.setHostList();
+    	}
+    	
+    	
     }
 }
