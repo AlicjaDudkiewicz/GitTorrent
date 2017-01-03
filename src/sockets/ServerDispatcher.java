@@ -6,9 +6,10 @@ import java.net.Socket;
 
 public class ServerDispatcher
 {
+    ServerSocket serverSocket = null;
+
     public void activateServer(int port)
     {
-        ServerSocket serverSocket = null;
         Socket socket = null;
 
         try
@@ -35,5 +36,15 @@ public class ServerDispatcher
         }
     }
 
+    public void deactivateServer()
+    {
+        try
+        {
+            serverSocket.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
    
 }
