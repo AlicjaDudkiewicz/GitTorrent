@@ -1,17 +1,10 @@
 package sockets;
 
-import model.FileInstance;
-import model.Host;
-import model.MainFilesList;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
-import messages.*;
-
-public class DispatcherServer
+public class ServerDispatcher
 {
     public void activateServer(int port)
     {
