@@ -4,17 +4,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Alicja on 2016-12-28.
  */
-public class FileInstance
+public class FileInstance implements Serializable
 {
     private String name;
     private String md5;
+
     private long size;
+
     public FileInstance(File file)
     {
         this.name=file.getName();
@@ -31,7 +34,6 @@ public class FileInstance
                 ", size=" + size +
                 '}';
     }
-
     private  String getMD5(File file)
     {
         MessageDigest messageDigest = null;
@@ -84,5 +86,40 @@ public class FileInstance
 
     public long getSize() {
         return size;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        FileInstance that = (FileInstance) o;
+
+        if (size != that.size)
+        {
+            return false;
+        }
+        if (!name.equals(that.name))
+        {
+            return false;
+        }
+        return md5.equals(that.md5);
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = name.hashCode();
+        result = 31 * result + md5.hashCode();
+        result = 31 * result + (int) (size ^ (size >>> 32));
+        return result;
     }
 }

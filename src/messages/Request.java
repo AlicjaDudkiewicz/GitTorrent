@@ -12,4 +12,8 @@ public class Request implements Serializable
     {
         return host;
     }
+    public void setHost(Host host)
+    {
+        this.host=host;
+    }
 }

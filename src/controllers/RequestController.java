@@ -16,28 +16,29 @@ import model.MainFilesList;
 
 public class RequestController
 {
+
+    private MainFilesList mainFilesList;
+
     public Response serveRequest(Request request)
     {
         Host host = request.getHost();
         Response response = null;
-        MainFilesList mainFilesList = MainFilesList.getInstance();
+        mainFilesList = MainFilesList.getInstance();
+
         if (request instanceof FileListUploadRequest)
         {
             response = new FileListUploadResponse();
-
-            if (!(host == null || host.getFilesList() == null))
+            if (!(host == null))
             {
-                mainFilesList.updateList(host);
-
+                mainFilesList.updateList((FileListUploadRequest) request);
                 response.setStatus("OK");
             }
             else
             {
                 response.setStatus("FAILED");
             }
-
-
         }
+
         if (request instanceof FilesListRequest)
         {
             response = new FilesListResponse();
@@ -45,6 +46,7 @@ public class RequestController
             ((FilesListResponse) response).setFilesList(allFilesList);
             response.setStatus("OKd");
         }
+
         if (request instanceof HostListRequest)
         {
             response = new HostListResponse();
@@ -55,9 +57,15 @@ public class RequestController
                 ((HostListResponse) response).setHostList(hostList);
                 response.setStatus("OK");
             }
-            response.setStatus("FAILED");
+            else
+                response.setStatus("FAILED");
         }
         return response;
+    }
+
+    public void disableHost(Host host)
+    {
+        mainFilesList.removeHost(host);
     }
 
 }

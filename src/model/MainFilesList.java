@@ -1,10 +1,9 @@
 package model;
 
-import model.FileInstance;
-import model.Host;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import messages.FileListUploadRequest;
 
 /**
  * Created by Alicja on 2016-12-30.
@@ -27,11 +26,10 @@ public class MainFilesList
         return instance;
     }
 
-    public void updateList(Host host)
+    public void updateList(FileListUploadRequest fileList)
     {
-        mainFilesList.remove(host);
-        ArrayList<FileInstance> uploadedList = host.getFilesList();
-        mainFilesList.put(host, uploadedList);
+        mainFilesList.remove(fileList.getHost());
+        mainFilesList.put(fileList.getHost(), fileList.getFileList());
     }
 
     public ArrayList<Host> getHostNames(FileInstance fileInstance)
@@ -61,5 +59,10 @@ public class MainFilesList
             }
         }
         return allFilesList;
+    }
+
+    public void removeHost(Host host)
+    {
+        mainFilesList.remove(host);
     }
 }

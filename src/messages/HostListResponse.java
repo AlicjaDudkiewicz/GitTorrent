@@ -9,7 +9,7 @@ import model.Host;
  */
 public class HostListResponse extends Response
 {
-    private ArrayList<Host> hostList= new ArrayList<>();
+    private ArrayList<Host> hostList = new ArrayList<>();
 
     public ArrayList<Host> getHostList()
     {

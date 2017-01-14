@@ -1,68 +1,92 @@
 package sockets;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import controllers.RequestController;
 import messages.Request;
 import messages.Response;
+import model.Host;
 
 public class ServerClientSocketThread implements Runnable
 {
 
-        private Socket socket;
-        private RequestController requestController= new RequestController();
+    private Socket socket;
+    private RequestController requestController = new RequestController();
+    private ObjectOutputStream output;
+    private ObjectInputStream  input;
 
-        public ServerClientSocketThread(Socket clientSocket)
+    public ServerClientSocketThread(Socket clientSocket)
+    {
+        this.socket = clientSocket;
+        try
         {
-            this.socket = clientSocket;
+            this.input = new ObjectInputStream(socket.getInputStream());
+            this.output = new ObjectOutputStream(socket.getOutputStream());
         }
-
-        public void run()
+        catch (IOException e)
         {
+            e.printStackTrace();
+        }
+    }
 
-            ObjectInputStream ois =null;
-            ObjectOutputStream ous=null;
-            Request request = null;
-            Response response=null;
+    public void run()
+    {
+        Request request;
+        Response response;
+        Host remoteHost=null;
 
-            try {
-                ois= new ObjectInputStream(socket.getInputStream());
-                request=(Request)ois.readObject();
-                ous = new ObjectOutputStream(socket.getOutputStream());
-            } catch (IOException | ClassNotFoundException e)
+        while (true)
+        {
+            try
             {
-                e.printStackTrace();
-            }
+                request = (Request) input.readObject();
 
-            while (true)
-            {
-                try
+                if (request == null)
                 {
-
-                    if (request == null)
-                    {
-                        socket.close();
-                        return;
-                    } else
-                    {
-                        response=requestController.serveRequest(request);
-                        ous.writeObject(response);
-                        ous.flush();
-                    }
-                } catch (IOException e)
-                {
-                    try
-                    {
-                        socket.close();
-                    }
-                    catch (IOException e1)
-                    {
-                        e1.printStackTrace();
-                    }
+                    disableHost(remoteHost);
+                    tryCloseSocket();
                     return;
                 }
+                else
+                {
+                    request.getHost().setIp(socket.getInetAddress().getHostAddress());
+                    remoteHost = request.getHost();
+                    response = requestController.serveRequest(request);
+                    output.writeObject(response);
+                    output.flush();
+                }
+            }
+            catch (IOException | ClassNotFoundException e)
+            {
+                disableHost(remoteHost);
+                tryCloseSocket();
+                return;
             }
         }
+    }
+
+    private void disableHost(Host remoteHost)
+    {
+        if(remoteHost!=null) //if is null then session was not initialized, no need to clean up
+        {
+            requestController.disableHost(remoteHost);
+            System.out.println("Host disconected: "+ remoteHost);
+        }
+    }
+
+    private void tryCloseSocket()
+    {
+        try
+        {
+            socket.close();
+        }
+        catch (IOException e)
+        {
+
+        }
+    }
 
 }
